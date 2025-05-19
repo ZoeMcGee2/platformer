@@ -197,7 +197,39 @@ public class Level {
 	//Your code goes here! 
 	//Please make sure you read the rubric/directions carefully and implement the solution recursively!
 	private void water(int col, int row, Map map, int fullness) {
+		String name;
+		int full = 3;
+		if(fullness==3){
+			name = "Full_water";
+			full = 2;
+		} else if(fullness==2){
+			name = "Half_water";
+			full = 1;
+		} else if(fullness==1){
+			name = "Quarter_water";
+			full = 1;
+		} else{
+			name = "Falling_water";
+		}
+		Water w = new Water(col, row, tileSize, tileset.getImage(name), this, fullness);
 		
+		map.addTile(col, row, w);
+
+                       //check if we can go down
+		if(row+2 < map.getTiles()[0].length && !map.getTiles()[col][row+1].isSolid() && map.getTiles()[col][row+2].isSolid() && fullness==0){
+			water(col, row+1, map, 3);
+		} else if(row+1 < map.getTiles()[0].length && !map.getTiles()[col][row+1].isSolid()){
+			water(col, row+1, map, 0);
+		} else { // if we can't go down go left and right
+			//right
+			if(col+1 < map.getTiles().length && !(map.getTiles()[col+1][row] instanceof Water) && !map.getTiles()[col+1][row].isSolid() && fullness!=0) {
+				water(col+1, row, map, full);
+			}
+			//left
+			if(col-1 >= 0 && !(map.getTiles()[col-1][row] instanceof Water) && !map.getTiles()[col-1][row].isSolid() && fullness!=0) {
+				water(col-1, row, map, full);
+			}
+		}
 	}
 
 
