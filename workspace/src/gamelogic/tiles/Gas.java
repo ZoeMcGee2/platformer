@@ -22,4 +22,9 @@ public class Gas extends Tile{
 	public void setIntensity(int intensity) {
 		this.intensity = intensity;
 	}
+	public void update(float tslf, BufferedImage image) {
+   	 	super.update(tslf);
+   	 	super.setImage(image);
+    }
+
 }
