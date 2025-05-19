@@ -236,9 +236,13 @@ public class Level {
 		map.addTile(col, row, g);
 		placedThisRound.add(g);
 
-		for(Gas gas : placedThisRound){
+		for(int i=0; placedThisRound.size()<=numSquaresToFill; i++){
+			Gas gas = placedThisRound.get(i);
 			int gasCol = gas.getCol();
 			int gasRow = gas.getRow();
+			if(placedThisRound.size()>=numSquaresToFill){
+				break;
+			}
 			if(gasRow-1>0 && !(map.getTiles()[gasCol][gasRow-1] instanceof Gas) && !map.getTiles()[gasCol][gasRow-1].isSolid()){
 				Gas g1 = new Gas(gasCol, gasRow-1, tileSize, tileset.getImage("GasOne"), this, 0);
 				map.addTile(gasCol, gasRow-1, g1);
