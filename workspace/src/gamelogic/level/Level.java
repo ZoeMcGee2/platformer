@@ -235,14 +235,13 @@ public class Level {
 		Gas g = new Gas(col, row, tileSize, tileset.getImage("GasOne"), this, 0);
 		map.addTile(col, row, g);
 		placedThisRound.add(g);
-
-		for(int i=0; placedThisRound.size()<=numSquaresToFill; i++){
+		for(int i=0; placedThisRound.size()<numSquaresToFill; i++){
+			if(i==placedThisRound.size() && placedThisRound.size()<numSquaresToFill){
+				break;
+			}
 			Gas gas = placedThisRound.get(i);
 			int gasCol = gas.getCol();
 			int gasRow = gas.getRow();
-			if(placedThisRound.size()>=numSquaresToFill){
-				break;
-			}
 			if(gasRow-1>0 && !(map.getTiles()[gasCol][gasRow-1] instanceof Gas) && !map.getTiles()[gasCol][gasRow-1].isSolid()){
 				Gas g1 = new Gas(gasCol, gasRow-1, tileSize, tileset.getImage("GasOne"), this, 0);
 				map.addTile(gasCol, gasRow-1, g1);
@@ -283,6 +282,7 @@ public class Level {
 				map.addTile(gasCol-1, gasRow+1, g8);
 				placedThisRound.add(g8);
 			}
+			
 		}
 	}
 
