@@ -121,8 +121,10 @@ public class Level {
 					tiles[x][y] = new Water(xPosition, yPosition, tileSize, tileset.getImage("Half_water"), this, 2);
 				else if (values[x][y] == 21)
 					tiles[x][y] = new Water(xPosition, yPosition, tileSize, tileset.getImage("Quarter_water"), this, 1);
-				else if (values[x][y] == 22)
+				else if (values[x][y] == 22){
 					tiles[x][y] = new Flower(xPosition, yPosition, tileSize, tileset.getImage("Power_up"), this, 3);
+					flowers.add((Flower) tiles[x][y]);
+				}
 			}
 
 		}
@@ -172,12 +174,17 @@ public class Level {
 
 			for (int i = 0; i < flowers.size(); i++) {
 				if (flowers.get(i).getHitbox().isIntersecting(player.getHitbox())) {
-					if(flowers.get(i).getType() == 1)
+					if(flowers.get(i).getType() == 1){
 						water(flowers.get(i).getCol(), flowers.get(i).getRow(), map, 3);
-					else if(flowers.get(i).getType() == 2)
+					}
+					else if(flowers.get(i).getType() == 2){
 						addGas(flowers.get(i).getCol(), flowers.get(i).getRow(), map, 20, new ArrayList<Gas>());
-					else if(flowers.get(i).getType() == 3)
+					}
+					else{
 						player.powerUp = true;
+						Tile t = new Tile(flowers.get(i).getCol(), flowers.get(i).getRow(), tileSize, null, false, this);
+						map.addTile(flowers.get(i).getCol(),flowers.get(i).getRow(),t);
+					}
 					flowers.remove(i);
 					i--;
 				}
